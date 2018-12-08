@@ -1,0 +1,67 @@
+\documentclass{article}
+\usepackage{amsmath, enumitem}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage[margin=1in]{geometry}
+\usepackage{float}
+\restylefloat{table}
+\usepackage{placeins}
+
+
+
+\begin{document}
+
+\title{Econ 741 Homework 5}
+\author{John Appert, Randall Chicolla, Andrea Franz}
+\maketitle
+
+
+\section{Question 1. Discrete Choice (44 points):}
+
+\begin{enumerate}
+\item Run a clogit of transportation choice on travel time (10 points)
+\item What percentage of people in the data choose each of the four options? (10 points)
+\item What are the predicted probabilities with the clogit? (10 points)
+\item Suppose that planes get quicker, and that the average plane trip becomes one
+hour shorter. (12 points)
+\begin{enumerate}
+\item How much less likely (as a percent) are people to fly? (3 points)
+\item How much more likely (as a percent) are people to take the train? (3 points)
+\item How much more likely (as a percent) are people to take the bus? (3 points)
+\item How much more likely (as a percent) are people to take a car? (3 points)
+\end{enumerate}
+\item Report the marginal effect of travel time on the likelihood that someone flies for someone making $20,000 a year and for someone making $80,000 a year. (12 points)
+\end{enumerate}
+
+\section{Question 2. Time Series: }
+
+For this question you will need to clean some data. Take the
+ur.dta dataset and merge it with the GDP cleaned.dta file so that you have
+data on the average unemployment rate in a quarter and quarterly GDP
+growth. Keep data from 1950 to present that you can match (i.e. you can’t
+use October 2017). You will want to use the commands “collapse” and
+“merge” here. With this cleaned data, answer the following questions (34
+points)
+\begin{enumerate}
+\item Using only data from 1950 through 2016, test for stationarity in both variables. Ignore drifts and trends. (24 points)
+\begin{enumerate}
+\item Suppose you are asked to regress UR on GDP growth. In order for this regression to be meaningful, what needs to be true? (4 points)
+\item Is UR stationary? (3 points)
+\item If not, how many lags do you need to include for it to become stationary? (3 points)
+\item Is GDP growth stationary? (3 points)
+\item If not, how many lags do you need to include for it to become stationary? (3 points)
+\item Can you run a meaningful regression of UR and GDP given what you have found above and any other evidence you may want to explore? If not, run a model with transformations of the variables that would be meaningful. (8 points)
+\end{enumerate}
+\item Run a VAR of UR on GDP growth.
+\begin{enumerate}
+\item Try this with 1-5 lags. Pick the best model according to the BIC and report only those results. (10 points)
+\item Does GDP growth Granger cause UR? (5 points)
+\item Does UR Granger cause GDP growth? (5 points)
+\end{enumerate}
+\end{enumerate}
+(a) 
+s
+
+\end{document}
+
