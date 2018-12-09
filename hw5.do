@@ -94,49 +94,62 @@ margins, dydx(travel_time)
 ***The year_q has extra character attached to year so need to 
 
 *****Turn monthly data into quarterly
- use "\\files\users\rchicola\Desktop\ur.dta" 
+*use "\\files\users\rchicola\Desktop\ur.dta" 
+use ur.dta, clear
 
+summarize 
 gen Quarter =1 if (month==1 | month==2 | month==3)
 replace Quarter =2 if (month==4 | month==5 | month==6)
 replace Quarter =3 if (month==7 | month==8 | month==9)
 replace Quarter =4 if (month==10 | month==11 |month==12)
-
+summarize
 
 collapse ur, by(year Quarter)
 
-save "\\files\users\rchicola\Desktop\URQuarter.dta", replace
-
-use "\\files\users\rchicola\Desktop\GDP_cleaned.dta" 
+summarize
+*save "\\files\users\rchicola\Desktop\URQuarter.dta", replace
+save URQuarter.dta, replace
+*use "\\files\users\rchicola\Desktop\GDP_cleaned.dta" 
+use GDP_cleaned.dta, clear
 *"C:\Users\rchicola\AppData\Local\Temp\11\STD00000000.tmp"
 egen Quarter = seq(), f(1) t(4)
 
+summarize
 ***Dive by 10 to get rig of extra 0
 gen year = (year_q- Quarter)/10
 
-
+summarize
 *use "\\files\users\rchicola\Desktop\URQuarter.dta"
-
-merge m:1 year Quarter  using "\\files\users\rchicola\Desktop\URQuarter.dta"
+*use URQuarter.dta, clear
+*merge m:1 year Quarter  using "\\files\users\rchicola\Desktop\URQuarter.dta"
+merge m:1 year Quarter  using URQuarter.dta
 **Part A Using only data from 1950 through 2016, test for stationarity in both variables.
 *Ignore drifts and trends. (24 points)
+summarize
 drop year_q
 drop _merge
 drop if growth==.
 drop if year==2017
- save "\\files\users\rchicola\Desktop\GDP_cleaned_m.dta", replace
- 
-use "\\files\users\rchicola\Desktop\GDP_cleaned_m.dta"
- 
+*save "\\files\users\rchicola\Desktop\GDP_cleaned_m.dta", replace
+save GDP_cleaned_m.dta, replace
+*use "\\files\users\rchicola\Desktop\GDP_cleaned_m.dta"
+ use GDP_cleaned_m.dta
 * i. Suppose you are asked to regress UR on GDP growth. In order for this
 *regression to be meaningful, what needs to be true? (4 points)
-reg 
+
 *GDP would have to be negatively correlated with unemployment, but it would be lagged.
-*
+*I think the correct answer here is that they both need to be stationary (JTA)
 
 *Creating a unique identifier for time series
-*gen yearq= year*10 +Quarter
-***This method creates gaps, not 66 gaps not continuous
 
+*JTA:  First sort data
+summarize
+sort year Quarter
+*generate index variable t
+capture gen t=_n
+
+*set as a time interval
+tsset t
 
 *set this as the time series
 *tsset yearq
@@ -145,15 +158,32 @@ gen id=_n
 tsset id
 
 ***Dickey-Fuller Test  Google tests for stationary and stability in time-series data
-dfgls ur
-***Look up in T-stat table?
+*test for the stationarity of ur
+dfuller ur  
+*not stationary, t-stat -1.849 vs -2.879
+dfuller ur, lags(1)
+*At lag 1 the we can reject the null hypothesis.  -4.109 vs -2.879
 
+*is GDP growth stationary?
+summarize
+dfuller growth
+*I get that growth is stationary
 
+*GDP growth is stationary -4.446 vs -2.879
 
-*ii Is UR stationary? (3 points)
-***Figure out stationary interpretation/explanation later
+*Can you run a meaningful regression?  Need to lag UR
+reg l.ur growth
 
-
-*iii 
-*Do tomorrow
+var ur growth
+*AIC=2.964
+var ur growth, lags(1)
+*AIC 3.37
+var ur growth, lags(2)
+*AIC 5.12
+var ur growth, lags(3)
+*AIC 5.96
+var ur growth, lags(4)
+*AIC 6.43
+var ur growth, lags(5)
+*AIC 6.96
 
