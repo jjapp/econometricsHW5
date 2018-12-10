@@ -9,6 +9,15 @@
 \usepackage{placeins}
 
 
+\usepackage{siunitx} % Required for alignment
+
+\sisetup{
+  round-mode          = places, % Rounds numbers
+  round-precision     = 2, % to 2 places
+}
+
+
+
 
 \begin{document}
 
@@ -47,11 +56,41 @@ points)
 \item Using only data from 1950 through 2016, test for stationarity in both variables. Ignore drifts and trends. (24 points)
 \begin{enumerate}
 \item Suppose you are asked to regress UR on GDP growth. In order for this regression to be meaningful, what needs to be true? (4 points)
+
+Both UR and GDP growth need to be stationary for the regression to be meaningful.  If either of these variables are non-stationary the mean and the variance of that variable will be growing/shrinking over time.  
+
 \item Is UR stationary? (3 points)
+
+No.  When we ran the Dickey Fuller test we got a t-statistic of -1.89 and a critical value of -2.879 for the 5 percent critical value.  Our p-value is 0.35.
+
 \item If not, how many lags do you need to include for it to become stationary? (3 points)
+
+We only need one lag to make UR stationary.  At one lag we get a test statistic of -4.109 and a p-value of 0.0009.
+
 \item Is GDP growth stationary? (3 points)
+
+Growth is stationary.  When we run a Dickey Fuller test on growth we get a test statistic of -4.446 and a p-value of 0.0002.
+
 \item If not, how many lags do you need to include for it to become stationary? (3 points)
+N/A
+
 \item Can you run a meaningful regression of UR and GDP given what you have found above and any other evidence you may want to explore? If not, run a model with transformations of the variables that would be meaningful. (8 points)
+
+We cannot run a meaningful regression of UR and GDP given that UR is not stationary.  However, if we make UR stationary through differencing than we can run a regression.
+
+\begin{table}[h!]
+  \begin{center}
+    \caption{Regression Results:  Differenced UR on Growth.}
+    \label{tab:table1}
+    \begin{tabular}{c|c|c|c|c}
+      D.UR & Coef. & Std.Err. & t & 95 perc Confidence level\\
+      \hline
+      growth  & -.1003998 & .0063872 & -15.72 & -.1129759	-.0878237 \\
+      cons & .3193156 & .0266202 & 12.00 & .2669016	.3717296 \\
+    \end{tabular}
+  \end{center}
+\end{table}
+						
 \end{enumerate}
 \item Run a VAR of UR on GDP growth.
 \begin{enumerate}
@@ -60,8 +99,6 @@ points)
 \item Does UR Granger cause GDP growth? (5 points)
 \end{enumerate}
 \end{enumerate}
-(a) 
-s
 
 \end{document}
 
